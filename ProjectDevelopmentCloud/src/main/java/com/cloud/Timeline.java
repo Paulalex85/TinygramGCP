@@ -88,7 +88,9 @@ public class Timeline extends HttpServlet {
 		else if (request.getParameter("EnvoieMessage") != null) {
 			
 			UserService userService = UserServiceFactory.getUserService();
-			
+			String cleFichierUploade = "";
+	        String urlImage = "";
+	        
 			long t1 = System.currentTimeMillis();
 			
 			BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -96,13 +98,15 @@ public class Timeline extends HttpServlet {
 	        
 	        Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
 	        List<BlobKey> blobKeys = blobs.get("photoFile");
-	        String cleFichierUploade = "";
-	        String urlImage = "";
 	        
-	        if(blobKeys.size()>0) {
-	        	cleFichierUploade = blobKeys.get(0).getKeyString();
-	            urlImage = imagesService.getServingUrl(ServingUrlOptions.Builder.withBlobKey(blobKeys.get(0)));
-	        }
+        	try {
+				cleFichierUploade = blobKeys.get(0).getKeyString();
+				urlImage = imagesService.getServingUrl(ServingUrlOptions.Builder.withBlobKey(blobKeys.get(0)));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				cleFichierUploade = "";
+				urlImage = "";
+			}
 			
 			MessageEndpoint me = new MessageEndpoint();
 			me.createMessage(userService.getCurrentUser().getNickname(), request.getParameter("msg"), cleFichierUploade, urlImage);
