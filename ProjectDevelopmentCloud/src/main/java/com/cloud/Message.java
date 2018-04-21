@@ -1,16 +1,16 @@
 package com.cloud;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
+import java.util.ArrayList;
+import java.util.Date;
+
 import com.google.appengine.api.datastore.Key;
 
 public class Message implements java.io.Serializable {
 	String contenu;
 	Key parent;
-	List<Hashtag> listHashtag;
+	String cleImage;
+	String urlImage;
+	Date date;
 	
 	public Message () {
 		
@@ -19,6 +19,8 @@ public class Message implements java.io.Serializable {
 	public Message (String contenu, Key cle) {
 		this.contenu = contenu;
 		this.parent = cle;
+		this.cleImage = "";
+		this.urlImage = "";
 	}
 	
 	public String getContenu() {
@@ -37,54 +39,56 @@ public class Message implements java.io.Serializable {
 		this.parent = parent;
 	}
 
-	public List<Hashtag> getListHashtag() {
-		return listHashtag;
+	public String getCleImage() {
+		return cleImage;
 	}
 
-	public void setListHashtag(List<Hashtag> listHashtag) {
-		this.listHashtag = listHashtag;
+	public void setCleImage(String cleImage) {
+		this.cleImage = cleImage;
 	}
 
-	public void createMessage() {
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  		Entity msg = new Entity("Message",this.parent);
-  		msg.setProperty("contenu",this.contenu);
-  		
-  		detectHashtag();
-  		//TODO ADD HASHTAG
-  		datastore.put(msg);
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 	
-	public void detectHashtag() {
-		List<String> list = new ArrayList<String>();
-		if(this.contenu.contains("#")) {
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public static ArrayList<String> getHashtag(String msg) {
+		ArrayList<String> list = new ArrayList<String>();
+		if(msg.contains("#")) {
 			String s= "";
 			Boolean currentHashtag = false;
-			for(int i = 0; i < this.contenu.length(); i++) {
+			for(int i = 0; i < msg.length(); i++) {
 				if(currentHashtag) {
-					if(this.contenu.charAt(i) == ' ') {
+					if(msg.charAt(i) == ' ') {
 						currentHashtag = false;
 						list.add(s);
 						s ="";
-					}else if (this.contenu.charAt(i) == '#') {
+					}else if (msg.charAt(i) == '#') {
 						list.add(s);
 						s ="";
 					}else {
-						s += this.contenu.charAt(i);
+						s += msg.charAt(i);
 					}
 				}
-				else if (this.contenu.charAt(i) == '#') {
+				else if (msg.charAt(i) == '#') {
 					currentHashtag = true;
 				}
 			}
-			
-			for( String toAdd : list) {
-				Hashtag h = new Hashtag(toAdd);
-				this.listHashtag.add(h);
-				if(!Hashtag.hashtagAlreadyExist(h.getTag())) {
-					h.createHashtag();
-				}
+			if(currentHashtag) {
+				list.add(s);
 			}
 		}
+		return list;
 	}
 }

@@ -1,37 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <welcome-file-list>
+   <welcome-file>Accueil</welcome-file>
+</welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>GenerateUsers</display-name>
+    <servlet-name>GenerateUsers</servlet-name>
+    <servlet-class>com.cloud.GenerateUsers</servlet-class>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>Inscription</servlet-name>
+    <servlet-name>GenerateUsers</servlet-name>
+    <url-pattern>/generateUsers</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SystemServiceServlet</servlet-name>
+    <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+    <init-param>
+      <param-name>services</param-name>
+      <param-value>com.cloud.UserEndpoint,com.cloud.MessageEndpoint</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SystemServiceServlet</servlet-name>
+    <url-pattern>/_ah/spi/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GenerateMessage</display-name>
+    <servlet-name>GenerateMessage</servlet-name>
+    <servlet-class>com.cloud.GenerateMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GenerateMessage</servlet-name>
+    <url-pattern>/generateMessage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Accueil</display-name>
+    <servlet-name>Accueil</servlet-name>
+    <servlet-class>com.cloud.Accueil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Accueil</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Timeline</display-name>
+    <servlet-name>Timeline</servlet-name>
+    <servlet-class>com.cloud.Timeline</servlet-class>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>EnvoieMessage</servlet-name>
-    <url-pattern>/sendMessage</url-pattern>
+    <servlet-name>Timeline</servlet-name>
+    <url-pattern>/timeline</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RechercheUser</display-name>
+    <servlet-name>RechercheUser</servlet-name>
+    <servlet-class>com.cloud.RechercheUser</servlet-class>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>Connexion</servlet-name>
-    <url-pattern>/connexion</url-pattern>
+    <servlet-name>RechercheUser</servlet-name>
+    <url-pattern>/findUser</url-pattern>
   </servlet-mapping>
-  <welcome-file-list>
-    <welcome-file>createUser.jsp</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>Inscription</display-name>
-    <servlet-name>Inscription</servlet-name>
-    <servlet-class>com.cloud.Inscription</servlet-class>
-  </servlet>
-  <servlet>
-    <description></description>
-    <display-name>EnvoieMessage</display-name>
-    <servlet-name>EnvoieMessage</servlet-name>
-    <servlet-class>com.cloud.EnvoieMessage</servlet-class>
-  </servlet>
-  <servlet>
-    <description></description>
-    <display-name>Connexion</display-name>
-    <servlet-name>Connexion</servlet-name>
-    <servlet-class>com.cloud.Connexion</servlet-class>
-  </servlet>
-  
 </web-app>
