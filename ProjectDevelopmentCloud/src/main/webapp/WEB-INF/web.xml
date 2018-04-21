@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <servlet-mapping>
+    <servlet-name>Inscription</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EnvoieMessage</servlet-name>
+    <url-pattern>/sendMessage</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Connexion</servlet-name>
+    <url-pattern>/connexion</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>createUser.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Inscription</display-name>
+    <servlet-name>Inscription</servlet-name>
+    <servlet-class>com.cloud.Inscription</servlet-class>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>EnvoieMessage</display-name>
+    <servlet-name>EnvoieMessage</servlet-name>
+    <servlet-class>com.cloud.EnvoieMessage</servlet-class>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>Connexion</display-name>
+    <servlet-name>Connexion</servlet-name>
+    <servlet-class>com.cloud.Connexion</servlet-class>
+  </servlet>
+  
+</web-app>
